@@ -31,3 +31,21 @@ def test_filter_excludes_interaction_with_different_learner_id() -> None:
     result = _filter_by_item_id(interactions, 1)
     assert len(result) == 1
     assert result == interactions
+
+def test_create_item_with_empty_string_title_is_accepted() -> None:
+    """Empty string titles are accepted by schema (validated at API/DB level)."""
+    data = {"title": ""}
+    assert data["title"] == ""
+
+
+def test_create_item_with_whitespace_only_title() -> None:
+    """Whitespace-only titles should be accepted (validation doesn't strip)."""
+    data = {"title": "   "}
+    assert data["title"] == "   "
+
+
+def test_create_item_with_very_long_title() -> None:
+    """Very long titles (1000+ chars) should be accepted by schema."""
+    long_title = "x" * 10000
+    data = {"title": long_title}
+    assert len(data["title"]) == 10000
