@@ -29,6 +29,7 @@ async def get_interactions(
     return _filter_by_item_id(interactions, item_id)
 
 
+
 @router.post("/", response_model=InteractionLog, status_code=201)
 async def post_interaction(
     body: InteractionLogCreate, session: AsyncSession = Depends(get_session)
