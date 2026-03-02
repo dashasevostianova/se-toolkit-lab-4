@@ -16,7 +16,7 @@ def _filter_by_item_id(
 ) -> list[InteractionLog]:
     if item_id is None:
         return interactions
-    return [i for i in interactions if i.learner_id == item_id]
+    return [i for i in interactions if i.item_id == item_id]
 
 
 @router.get("/", response_model=list[InteractionModel])
@@ -27,6 +27,7 @@ async def get_interactions(
     """Get all interactions, optionally filtered by item."""
     interactions = await read_interactions(session)
     return _filter_by_item_id(interactions, item_id)
+
 
 
 @router.post("/", response_model=InteractionLog, status_code=201)
